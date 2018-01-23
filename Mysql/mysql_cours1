@@ -1,0 +1,29 @@
+MySQL - cours 1 - Branislav Mezsaros
+
+# MySQL
+
+Les contraintes que l’on ajoute aux bases de données doivent être connues avant sa création.
+
+## Le modèle relationnel
+
+Correspond à la relation des entités entre elles-mêmes. L’algèbre relationnel : manipuler ces relations. Il est diffiçile de définir de quelle manière on doit découper cette réalité. Il est nécessaire de mettre en priorité des règles de gestions : quelles possibilités donne notre BDD ?
+
+
+**Entités** : la gestion des attributs, leur **nature** (int, chaine de carct etc), et prendre en compte les contraintes techniques pour l’optimisation. On présuppose par exemple qu’un nom aura toujours maximum 20 caractères. 
+
+Il faut trouver un juste milieu entre ce que l’on met dans la base et les contraintes d’optimisation. Il est difficile de définir précisément une entité.
+
+Chaque entités est caractérisées par des **attributs** : propriétés. Ex si c’est un lecteur (nom prénom, date de naissance) les contraintes que l’on doit assigner (ex : les livres qui ne correspondent pas à l’âge de la personne par ex). Ces propriétés correspondent aux attributs.
+Régle de gestion est un jeu d’anticipation (exemple : un livre a t-il nécessairement un exemplaire ?) = on construit un modèle relationnel à partir de MCD. 
+
+Le passage du MCD au MLD et SQL : 
+
+les # correspondent au clé étrangères et renvoient à l’extérieur
+plus simple : a_id
+
+INT NOT NULL = champ obligatoire
+CREATE USER ‘non-root’ @’localhost’ IDENTIFIED BY ‘123’ ;
+GRANT ALL PRIVILEGES ON \*.\* TO’non-root’@’localhost’ WITH GRANT OPTION ;
+FLUSH PRIVILEGES ;
+SELECT User, Host, Password, FROM mysql.user ;
+
