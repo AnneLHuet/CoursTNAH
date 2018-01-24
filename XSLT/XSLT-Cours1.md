@@ -35,15 +35,23 @@ Un fichier valide respecte "la grammaire". Un fichier valide n'est pas forcémen
 
 ### Un document XML bien formé
 
-Il ne doit exister qu'une seule balise racine. Toutes les balises doivent être ferméebalises. Les noms de balises doivent impérativement commencé par une **lettre ou "\_"**, ne pas contenir " ou - etc.
+Il ne doit exister qu'une seule balise racine. Toutes les balises doivent être fermées. Les noms de balises doivent impérativement commencé par une **lettre ou "\_"** ne pas contenir **"** ou **-** etc.
 
 Eviter au maximum les accents dans les noms de balises (mais cependant reste correct dans l'encodage du fichier lui même). (ASCII American Standard Code for Information Interchange)
 Avec **unicode**, on est confronté à un autre problème : on peut l'utiliser mais pose des problématique dans son utilisation d'une application à l'autre.
 
+Certains éléments ne peuvent pas faire parti d'un fichier XML : 
+	* & devient `&amp`
+	* < devient `&lt`
+	* > devient `&gt`
+	* ' devient `&apos`
+	* " devient `&quot`
+ Faire attention aux noms de variables et aux noms d'attributs.
+
 Exercice : 
 ```XML
 
-<t> (élément racine !)
+<t> (<!--élément racine-->
 	Hello
 	<a> </a>
 	<l5/>
@@ -69,9 +77,12 @@ Un document valide doit comporté le contenu recommandé par la DTD ex : un fich
 
 Le probléme avec la validation : fonctionne avec les petits fichiers. 
 
-Il existe deux normes de documents de validation : DTD et XML Schema. (Egalement : Relax NG, Schematron par liste d'assertion)
+Il existe deux normes de documents de validation : DTD et XML Schema. (Egalement : Relax NG évolution de la DTD mais pas aussi puissant que XML shéma, même s'il a été simplifier. Schematron par liste d'assertion)
 
 Une DTD peut être définie : soit à l'intérieur d'une document XML soit d'un fichier à part. Cette dernière solution est la plus fréquent et la plus pratique. L'intérêt d'avoir un fichier externe : il est réutilisable. Simplifie les changements, puisque l'on modifie un seul fichier pour modifier la DTD. 
+
+Pour définir une DTD externe il suffit d'écrire : 
+`<!DOCTYPE élément-racine SYSTEME "nom_du_fichier.dtd">`
 
 **Exemple**
 
@@ -90,6 +101,7 @@ Pour chacun des éléments, on définit sa composition, son nom et sa structure
 * on définit également les attributs si besoin avec `<!ATTlIST>`
 * **\*** signifie 0 à plusieurs
 * **+** signifie plusieurs
+* **?** non obligatoire
 * si rien n'est mentionné (ex : nom) signifie qu'il ne doit apparaître qu'une seule fois
 * **(#PCDATA)** signifie que l'élément contient du texte
 * dans cet exemple "H" est par défaut
@@ -99,14 +111,23 @@ Pour chacun des éléments, on définit sa composition, son nom et sa structure
 * Les différents connecteurs possibles : 
 	* séparés par une , et doivent apparaître dans l'ordre
 	* | un seul des deux éléments doit apparaître
-* Les attributs (voir attributs DTD): 
-	* CDATA chaîne quelconque de caractère
-	* 
-	* 
+* Les attributs déclarés par ATTLIST: 
+	* CDATA chaîne quelconque de caractère¹
+	* ID pour indiquer que la valeur de l'attribut est unique (identifiant)
+	* IDREF pour un numéri d'identifiant du document (création d'un lien dans le document) (un élément peut dépendre de plusieurs éléments uniques)
+	* ENTITY entité externe
+	* ENTITIES Liste d'ENTITY séparées par des espaces
+	* REQUIRED pour indiquer d'un attribut est obligatoire
+	* IMPLIED non obligatoire
+
 
 #### Bilan sur les DTD
 
-Il y a de nombreuses données types que l'on peut ajouter avec XML, mais qui ne sont pas prise en charge par la DTD
+Il y a de nombreuses données types que l'on peut ajouter avec XML, mais qui ne sont pas prise en charge par la DTD. Dans XML shema, on peut bien définir le nombre exacte d'apparition d'un èlèment ( à la différence de DTD et Relax NG). 
+
+Il n'y a pas vraiment de gestion des types de données avec DTD. On peut créer notre propre type de données avec XML shema, pas en DTD. 
+
+XML schema a été développé pour contourner ces limitations. La différence dans son principe de fonctionnement avec la DTD est que Relax NG est basé sur XML
 
 #### Exercices 
 
@@ -114,7 +135,7 @@ Il y a de nombreuses données types que l'on peut ajouter avec XML, mais qui ne 
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
-<!ELEMENT bibliotheque (livre)+>
+<!ELEMENT bibliotheque (livre*)>
 <!ELEMENT livre (titre, auteur*)>
 <!ATTLIST livre genre (fiction|drame|aventure|policier)#REQUIRED>
 <!ELEMENT titre (#PCDATA)>
@@ -123,8 +144,26 @@ Il y a de nombreuses données types que l'on peut ajouter avec XML, mais qui ne 
 
 <!> Respecter l'ordre 
 
+Ici #REQUIRED = on ne peut pas laisser ce champs vide. La liste (fiction | drame | ...) remplace (#PCDATA) qui indique qu'il s'agit d'une chaine de caractères.
+
+Peut être aprfois intéressant de commencer le fichier XML avant le shéma, selon ses besoins et sa mnière de travailler/réfléchir.
+
+**Exercice 2**
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+
+```
+
+En XSD les éléments dont on a besoin pour définir la galerie sont définit en premier. On définit en profondeur les éléments pour les récupérer par la suite. 
+
+Dans l'exemple, on a définit un type "Bibliography". 
+
 ### XSD
 
-Beaucoup plus complexe que DTD, Relax NG à simplifier son schéma. Il s'agit d'une alternative aux DTD. Spécifier les types de données, gérer l'ordre, le nombres d'occurences d'un élément.
+Beaucoup plus complexe que DTD, Relax NG a simplifié son schéma. 
+
+Il s'agit d'une alternative aux DTD. Spécifier les types de données dans chaque éléments, gérer l'ordre, le nombres d'occurences d'un élément.
+
 En XSD, on définit auparavant, les éléments obkigatoire de l'élément racine. (voir l'exemple PP Galeries). Beaucoup plus complexe et long que la DTD.
 
