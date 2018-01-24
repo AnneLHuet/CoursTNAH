@@ -1,4 +1,4 @@
-# Mysql - commandes
+# Mysql - Cours2
 
 `mysql -u nom_utilisateur -p`
 
@@ -36,10 +36,13 @@
 
 `TOP` / `LIMIT` limiter le nombre de lignes de résultats
   * TOP pour MS SQL SERVER et MS Access
-  * LIMIT fonctionne avec MYSQL et ORACLE
+  * LIMIT fonctionne avec MYSQL et ORACLE. Doit se trouver à la fin !
 
 `WHERE` restreindre les résultats
   * `LIKE` comparaison de chaîne. Permet de chercher les éléments par rapport à leur ressemblance.
+  	* K% retourne tous les enregistrement commençant par K peu importe le caractère qui suit
+  	* %K% retourne tous les enregistrements contenant K peu importe le caractère ,précédent ou suivant
+  	* [...]
   * `IN` comparaison à une liste
     * WHERE 'ghgdhgd' IN ('camille', 'jacques'); (équivalent de OR)
   * `BETWEEN` intervalle
@@ -49,6 +52,8 @@
 `ORDER BY` permet le tri des résultats d'une requêtes par ordre croissant (`ASC`) ou par ordre décroissant (`DESC`)
 
 `OFFSET` permet un décalage des résultats demandés
+
+`GROUP BY`
 
 <!> pour = utiliser **<=>** / pour. Pour signifier la différence : **!=** ou **<>**
 **%** signifie n'importe quelle chaine de caractère
