@@ -17,18 +17,39 @@
 * **voir le module csv**
 `dir(csv)`
 
+* **.reader()**
+	* prend comme argument :
+		* un fichier ouvert
+		* peut prendre un `dialect`
+
 `csv.reader(csvfile, delimiter='', quotechar'')`
 
-* **la fonction enumerate** renvoit un tuble sur une valeur simple
-`couleurs = ["vert", "rouge", "bleu"]`
-`for index, couleur in enumerate(couleurs)`
-	`print(str(index)+ " = " + couleur)`
+* **la fonction enumerate** 
+	* dans une boucle : renvoie un tuple sur une valeur simple
+
+```python
+
+couleurs = ["vert", "rouge", "bleu"]
+
+for index, couleur in enumerate(couleurs)
+	print(str(index)+ " = " + couleur)
+```
 
 * **csv.writer**
 	* prend comme argument : 
 		* un fichier ouvert en mode écriture
 		* un **delimiter** (délimiteur de colonne)
+	* la méthode **.writerow()**
+		* écrire une ligne
 
+```python
+
+import csv
+with open('data/csv/eggs.csv', 'w') as csvfile:
+    spamwriter = csv.writer(csvfile, delimiter=' ', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    spamwriter.writerow(['Spam'] * 5 + ['Baked Beans'])
+    spamwriter.writerow(['Spam', 'Lovely Spam', 'Wonderful Spam'])
+```
 * `from \__ import \__`
 
 # Chapitre 4.2 - Les fichiers CSV, JSON et les requêtes
