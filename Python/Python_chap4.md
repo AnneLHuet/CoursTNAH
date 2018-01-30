@@ -7,9 +7,8 @@
   * utilise un séparateur de colonne (virgule, point virgule, tabulation)
   * une ligne par ligne de tableur
 
-* package = ensemble de modules comportant des outils tels que les fonctions.
+* **package** = ensemble de modules comportant des outils tels que les fonctions.
 * voir la documentation : https://docs.python.org/3.5/library/csv.html
-* travailler avec le package standard pour utiliser des fichiers CSV
 
 * **importer le module csv**
 `import csv` 
@@ -24,8 +23,8 @@
 
 `csv.reader(csvfile, delimiter='', quotechar'')`
 
-* **la fonction enumerate** 
-	* dans une boucle : renvoie un tuple sur une valeur simple
+* la fonction **enumerate** 
+	* dans une boucle : renvoi un tuple sur une valeur simple
 
 ```python
 
@@ -50,7 +49,12 @@ with open('data/csv/eggs.csv', 'w') as csvfile:
     spamwriter.writerow(['Spam'] * 5 + ['Baked Beans'])
     spamwriter.writerow(['Spam', 'Lovely Spam', 'Wonderful Spam'])
 ```
-* `from \__ import \__`
+
+* `from \__ import \__` = importer d'un sous-module
+
+* **DictReader**
+
+* **DictWriter**
 
 # Chapitre 4.2 - Les fichiers CSV, JSON et les requêtes
 
@@ -58,9 +62,23 @@ with open('data/csv/eggs.csv', 'w') as csvfile:
 
 * `json.load()` : prend une instance de fichier en cours de lecture
 
-* `json.loads()`: prend une chaîne de caractère
+	```
+	with open("data/json/brecht.json") as f:
+    	print(json.load(f))```
 
-* la méthode **.format()** pour la concaténation de chaîne
+* `json.loads()`: à partir d'une chaine
+
+```
+with open("data/json/brecht.json") as f:
+    chaine = f.read()
+    print(json.loads(chaine))
+```
+
+* **la méthode .format() pour la concaténation de chaîne**
+  * ex : `print("Parlez moi de vous {}. Non, moi c'est {}. Pluto c'est {}".format("Pluto", "Odile", "Le chien de Mickey"))`
+
+* `json.dumps`
+
 
 ## Ecrire
 

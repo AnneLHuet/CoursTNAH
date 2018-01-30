@@ -63,6 +63,26 @@ def index():
   * prend en premier argument le chemin du template
   * des arguments nommés
 
+* système de templates de flask = jinja
+
+#### les conditions dans les templates 
+
+exemple : 
+
+```
+<body>
+        <h1>Bienvenue !</h1>
+        <p>
+            Il y a {{lieux|length}} enregistrés
+            {% if lieux %}
+            , voici le premier : {{lieux[0]}}
+            {% endif %}
+    </p>
+    </body>
+</html>
+
+```
+
 #### Les dictionnaires dans les templates
 
 * A partir du dictionnaire, on pourra appelé au choix:
@@ -84,20 +104,108 @@ Il y a {{lieux|length}} enregistrés :
   * <li><a href ="/place/{{lieu.id}}"> {{lieu.nom}}</a></li>
 
 #### Héritage dans les templates
+
 * La composition d'un site web : répétitivité des pages (toutes les pages sont à modifier)
   * problématique traiter en programmation
     * en HTML `iframe` permet d'intégrer une partie d'une page (Mais c'est moche!)
     * inclusion : on intègre un contenu dans une page déjà faite. Permet d'être plus souple dans la gestion de l'HTML
-    * en JINJA : on définit des blocs : {% block corps %} {%endblock%}
+    * en JINJA : on définit des blocs
+ 
+* **avec un seul bloc d'import** : 
 
-> Exemple :
+Exemple : 
+
+*templates/conteneur.html*
+
+```
+   	<html>
+    <head>
+        <title>Gazetteer</title>
+    </head>
+    <body>
+        <div><h1>Bienvenue sur le Gazetteer</h1></div>
+        <div>{% block corps%}{%endblock%}</div>
+    </body>
+</html>
+```
+
+*templates/accueil.html*
+
+```
 {% extends "conteneur.html" %}
 {% block corps %}
+Il y a {{lieux|length}} enregistrés :
+<ul>
+    {% for lieu_id, lieu in lieux.items() %}
+        <li><a href="{{url_for('lieu', place_id=lieu_id)}}">{{lieu.nom}}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+```
+
+* **avec plusieurs blocs d'import**
+
+*templates/conteneur.html*
+
+```
+<html>
+    <head>
+        <title>Gazetteer {%block titre %}{%endblock%}</title>
+    </head>
+    <body>
+        <div><h1>Bienvenue sur le Gazetteer</h1></div>
+        <div>{% block corps%}{%endblock%}</div>
+    </body>
+</html>
+
+templates/pages/accueil.html
+
+Pour plus de lisibilité, il est commun de regrouper les éléments semblables dans des sous-dossiers de templates.
+
+{% extends "conteneur.html" %}
+{% block corps %}
+Il y a {{lieux|length}} enregistrés :
+<ul>
+    {% for lieu_id, lieu in lieux.items() %}
+        <li><a href="{{url_for('lieu', place_id=lieu_id)}}">{{lieu.nom}}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
+```
+
+*templates/pages/places.html*
+
+```
+{% extends "conteneur.html" %}
+{% block titre %}
+    {%if lieu %}| Lieu : {{lieu.nom}} {% endif %}
+{% endblock %}
+
+{% block corps %}
+    {% if lieu %}
+        <h1>{{lieu.nom}}</h1>
+        <h2>{{lieu.moderne}}</h2>
+        <dl>
+            <dt>Longitude</dt><dd>{{lieu.latlong[1]}}</dd>
+            <dt>Latitude</dt><dd>{{lieu.latlong[0]}}</dd>
+            <dt>Description</dt><dd>{{lieu.description}}</dd>
+            <dt>Type</dt><dd>{{lieu.type}}</dd>
+        </dl>
+    {% else %}
+        <p>La base de données est en cours de constitution</p>
+    {% endif %}
+    <p><a href="{{url_for('accueil')}}">Retour à l'accueil</a></p>
+{% endblock %}
+```
+
 
 `extends`  permet d'importer le corps dans le conteneur. (Attention, pas de `{%endextends%}` ici !
 
 * on peut étendre plusieurs blocs avec un seul conteneur : déclarer l'ensemble des blocs
-* pn peut avoir des blocs avec des conteneurs et enfin des **includes** (intègre le HTML d'un autre template sans le modifier)
+* on peut avoir des blocs avec des conteneurs
+* **includes** intègre le HTML d'un autre template sans le modifier
+	* Cette inclusion se fait via `{% include "chemin/vers/inclusion/html" %}` et ne possède pas de fin `{% endincludes %}`.
 
 #### Les assets
 Pour faire des trucs jolis
@@ -106,4 +214,7 @@ Pour faire des trucs jolis
 * Peut être étendu à des polices de caractère (mauvaise idée en python)
 * Des images (mauvaise idée en python)
 
-Font partie des "statiques"
+* Font partie des "statics" : ne bouge pas
+	* pour réaliser un lien vers un fichier static : 
+		 
+
