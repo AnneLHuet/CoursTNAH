@@ -1,5 +1,4 @@
 XSLT - Branislav Mezsaros - 31/01/2018
-
 # XML Schema
 
 ## Espace de noms : les namespaces
@@ -19,7 +18,6 @@ XSLT - Branislav Mezsaros - 31/01/2018
 * il y en a beaucoup, c'est à nous d'analyser ce qui est utile
 
 * [voir : https://openclassrooms.com/courses/structurez-vos-donnees-avec-xml/schema-xml-les-types-simples ]
-
 # Le langage XPath : une technologie XML pour le parcours de l'arbre d'un document
 [voir : https://openclassrooms.com/courses/structurez-vos-donnees-avec-xml/xpath-localiser-les-donnees ]
 
@@ -27,7 +25,7 @@ XSLT - Branislav Mezsaros - 31/01/2018
 * XPath permet de se retrouver dans un document XML : permet de sélectionner des noeuds par navigation
 * XPath, recommandation du W3C, première version en 1999. 3éme version en 2015.
 
-## Expression des chemins en XPath 
+# Expression des chemins en XPath 
 
 Une **expression** d'XPath est une **succession d'étapes**
 
@@ -90,3 +88,24 @@ Une **expression** d'XPath est une **succession d'étapes**
 * **name()**
 * **id()**
 * **string-length**
+
+`/repertoire/personne/telephones/telephone[attribute::type="fixe"]`
+
+## Ressources
+
+### Tutoriels
+
+https://www.w3schools.com/xml/xpath_intro.asp
+http://www.way2tutorial.com/xml/xpath_node_test_examples.php
+
+### Tester XPath
+
+https://www.beautifyconverter.com/xpath-tester.php
+http://www.webtoolkitonline.com/xml-xpath-tester.html
+http://www.utilities-online.info/xpath/
+https://codebeautify.org/Xpath-Tester
+https://www.freeformatter.com/xpath-tester.html
+
+### Pour s'exercer
+
+http://learn.onion.net/language=en/taps=35426/35648/attribut-selection
