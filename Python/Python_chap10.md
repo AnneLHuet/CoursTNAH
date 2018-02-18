@@ -9,12 +9,16 @@ Python chapitre 10 - Thibault Clérice
 
 ## Sécurisé une base 
 
+* pour flask : deux méthode de frounies : 
+	* `generate_password_hash`
+	* `check_password_hash`
+
 * les attaques "Man in the middle"
 	* https://
 	* encrypter les formulaires / les données de session / les cookies
 	* le but étant que le "man in the middle" ne soit pas en mesure de comprendre ce qu'il se passe.
 
-* Flask ne peut pas fonctionner sans secret
+* Flask ne peut pas fonctionner sans secret (dans notre exemple Gazetteer `gazetteer/constantes.py`)
 
 * `@staticmethod`
 	* ne porte pas sur un utilisateur particulier mais concerne tous les utilisateurs
